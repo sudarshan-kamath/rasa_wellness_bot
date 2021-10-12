@@ -1,0 +1,150 @@
+version: '2.0'
+config:
+  store_entities_as_slots: true
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
+intents:
+- greet:
+    use_entities: true
+- goodbye:
+    use_entities: true
+- affirm:
+    use_entities: true
+- deny:
+    use_entities: true
+- mood_great:
+    use_entities: true
+- mood_unhappy:
+    use_entities: true
+- bot_challenge:
+    use_entities: true
+- ask_lower_stress:
+    use_entities: true
+- ask_eat_healthy:
+    use_entities: true
+- ask_exercise:
+    use_entities: true
+- inform:
+    use_entities: true
+- out_of_scope:
+    use_entities: true
+- thankyou:
+    use_entities: true
+entities:
+- exercise
+- sleep
+- stress
+slots:
+  confirm_exercise:
+    type: rasa.shared.core.slots.BooleanSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: false
+  exercise:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: false
+  sleep:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: false
+  diet:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: false
+  stress:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: false
+  goal:
+    type: rasa.shared.core.slots.TextSlot
+    initial_value: null
+    auto_fill: true
+    influence_conversation: false
+responses:
+  utter_greet:
+  - text: Hey! It's time for your daily wellness check. Tracking healthy habits is a great way to measure your progress over time. Would you like to answer some questions ?
+  utter_cheer_up:
+  - image: https://i.imgur.com/nGF1K8f.jpg
+    text: 'Here is something to cheer you up:'
+  utter_did_that_help:
+  - text: Did that help you?
+  utter_happy:
+  - text: Great, carry on!
+  utter_goodbye:
+  - text: Bye
+  utter_iamabot:
+  - text: I am a bot, powered by Rasa.
+  utter_stress_info:
+  - text: It's ok to feel overwhelmed at times. Try to set realistic expectations and exercise time management techniques, like dividing large tasks into more manageable pieces. Relaxation techniques, like deep breathing and meditation, can also be beneficial.
+  utter_exercise_info:
+  - text: Most healthy adults should aim to get about 150 minutes of moderate exercise per week. This includes activities like brisk walk or yard work.
+  utter_diet_info:
+  - text: A healthy diet includes fruits and vegetables, whole grains, dairy, lean protein, and plant-based fats. While there is room in a healthy diet for trats, added sugar should be eaten sparingly. Aim for a variety of foods, and balance.
+  utter_ask_confirm_exercise:
+  - text: Did you exercise yesterday? Don't sweat it if you didn't run a marathon
+  utter_ask_sleep:
+  - text: How much sleep did you get last night? How much
+  utter_ask_exercise:
+  - text: What kind of exercise did you do?
+  utter_ask_diet:
+  - text: Did you stick to a healthy diet yesterday?
+  utter_ask_stress:
+  - text: Is your stress level low, medium or high?
+  utter_ask_goal:
+  - text: Setting goals is a great way to focus your day. What do you want to accomplish today?
+  utter_slot_values:
+  - text: |-
+      Here is your daily wellness 
+       - Exercised: {confirm_exercise} 
+       - Type of exercise : {exercise} 
+       - Sleep: {sleep} 
+       - Stuck to a healthy diet? : {diet} 
+       - Stress level: {stress} 
+       - Goal: {goal}
+  utter_no_worries:
+  - text: No problem :)
+  utter_ask_continue:
+  - text: Sorry, I don't quite understand. Do you want to continue?
+actions: []
+forms:
+  health_form:
+    required_slots:
+      confirm_exercise:
+      - intent: inform
+        type: from_intent
+        value: true
+      - intent: affirm
+        type: from_intent
+        value: true
+      - intent: deny
+        type: from_intent
+        value: false
+      diet:
+      - intent: inform
+        type: from_text
+      - intent: affirm
+        type: from_text
+      - intent: deny
+        type: from_text
+      exercise:
+      - entity: exercise
+        type: from_entity
+      goal:
+      - intent: inform
+        type: from_text
+      sleep:
+      - entity: sleep
+        type: from_entity
+      - intent: deny
+        type: from_intent
+        value: None
+      stress:
+      - entity: stress
+        type: from_entity
+e2e_actions: []
