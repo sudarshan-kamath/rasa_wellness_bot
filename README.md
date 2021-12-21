@@ -7,5 +7,5 @@ The action server also works!
 
 ToDo:
 
-Add better documentation
-Upgrade to Rasa 3.x
+- [] Add better documentation
+- []  Upgrade to Rasa 3.x
